@@ -5,7 +5,7 @@ import Modal, {ModalContent} from '../modal/Modal'
 import SwiperCore, { Autoplay } from 'swiper'
 import './hero-slide.scss'
 import apiConfig from '../../api/apiConfig'
-import { apiGetMovieList, apiGetVideos } from '../../api'
+import { apiGetMovieList, apiGetVideos, movieType } from '../../api'
 import { useHistory } from 'react-router-dom'
 const HeroSlide = () => {
 
@@ -13,7 +13,7 @@ const HeroSlide = () => {
     
     useEffect(() => {
         const fetchMovieData = async() => {
-            const res = await apiGetMovieList()
+            const res = await apiGetMovieList(movieType.popular)
             setMovieItems(res.data.results.slice(1, 4))
         }
         fetchMovieData()
