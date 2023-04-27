@@ -10,8 +10,7 @@ const Routes = () => {
             <Route path='/:category/search/:keyword' component={Catalog}></Route>
             <Route path='/:category/:id' component={Detail}></Route>
             <Route path='/:category' component={Catalog}></Route>
-            <Route path='/' exact component={Home}></Route>
-
+            <Route path='/' exact component={Home}></Route>s
         </Switch>
     )
 }

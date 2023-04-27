@@ -8,15 +8,15 @@ import Routes from './config/Routes';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Route render={props => (
+      <BrowserRouter>
+        <Route render={props => (
         <>
           <Header {...props}/>
           <Routes/>
           <Footer/>
         </>
       )}/>
-    </BrowserRouter>
+      </BrowserRouter>
   );
 }
 
