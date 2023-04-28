@@ -3,6 +3,8 @@ import { SwiperSlide, Swiper } from 'swiper/react'
 import { apiGetMovieList, apiGetTvList, similar, movieType, category } from '../../api'
 import apiConfig from '../../api/apiConfig'
 import PropTypes from 'prop-types'
+import './movie-list.scss'
+import MovieCard from '../movie-card/MovieCard'
 const MovieList = props => {
     console.log(props)
     const [items, setItems] = useState([])
@@ -43,7 +45,7 @@ const MovieList = props => {
                 {
                     items.map((item, i) => (
                         <SwiperSlide key={i}>
-                            <img src={apiConfig.w500Image(item.poster_path)} alt="" />
+                            <MovieCard item={item} category={props.category}/>
                         </SwiperSlide>
                     ))
                 }

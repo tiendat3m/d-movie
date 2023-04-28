@@ -4,7 +4,7 @@ import apiConfig from "./api/apiConfig";
 const axiosClient = axios.create({
   baseURL: apiConfig.baseUrl,
   params: {
-    api_key: apiConfig.apiKey
+    api_key: apiConfig.apiKey,
   }
 });
 

@@ -1,4 +1,4 @@
-@use '../../scss' as *;
+@use "../../scss/" as *;
 
 .hero-slide {
     margin-bottom: 3rem;
@@ -9,9 +9,8 @@
     width: 100%;
     position: relative;
     background-position: center;
-    background-repeat: no-repeat;
     background-size: cover;
-    position: relative;
+    background-repeat: no-repeat;
 
     &::before {
         content: "";
@@ -26,14 +25,15 @@
     &::after {
         content: "";
         position: absolute;
-        top: 0;
+        bottom: 0;
         left: 0;
         width: 100%;
-        background-image: linear-gradient(to top, $body-bg, rgba($black, 0))
+        height: 100px;
+        background-image: linear-gradient(to top, $body-bg, rgba($black, 0));
     }
 
     &__content {
-        @include flex(center , center);
+        @include flex(center, center);
         position: relative;
 
         &__info {
@@ -58,7 +58,7 @@
                     font-size: 4rem;
                 }
             }
-            
+
             .overview {
                 font-weight: 700;
             }
@@ -67,23 +67,27 @@
                 margin-left: 1rem;
             }
 
-            .btns, .overview, .title {
+            .btns,
+            .title,
+            .overview {
                 opacity: 0;
                 transform: translateY(-100px);
-                transition: transform .5s ease, opacity .5s ease;
-            }   
+                transition: transform 0.5s ease, opacity 0.5s ease;
+            }
         }
+
         &__poster {
             flex: 1;
             @include flex(center, center);
             position: relative;
+
             img {
                 width: 400px;
                 border-radius: $border-radius;
                 box-shadow: $box-shadow;
 
                 transform: scale(0);
-                transition: transform .5s ease;
+                transition: transform 0.7s ease;
             }
 
             @include tablet {
@@ -99,18 +103,23 @@
     }
 
     &.active > &__content > &__content__info {
-        .btns, .overview, .title {
+        .btns,
+        .title,
+        .overview {
             opacity: 1;
             transform: translateY(0);
         }
-        .title  {
-            transition-delay: .3s, .3s;
+
+        .title {
+            transition-delay: 0.3s, 0.3s;
         }
-        .overview  {
-            transition-delay: .6s, .6s;
+
+        .overview {
+            transition-delay: 0.6s, 0.6s;
         }
-        .btns  {
-            transition-delay: .9s, .9s;
+
+        .btns {
+            transition-delay: 0.9s, 0.9s;
         }
     }
 }
