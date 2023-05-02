@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min'
 import { category, movieType, tvType } from '../../api'
 import MovieCard from '../movie-card/MovieCard'
 import { apiGetMovieList, apiGetTvList, search } from '../../api'
+import Input from '../input/Input'
+import Button from '../button/Button'
 
 import './movie-grid.scss'
 import { OutlineButton } from '../button/Button'
@@ -14,7 +16,7 @@ const MovieGrid = props => {
     const { keyword } = useParams
 
     useEffect(() => {
-        const fetchListData = async () => {
+        const getList = async () => {
             let res = null
             if(keyword === undefined) {
                 const params = {}
@@ -30,11 +32,12 @@ const MovieGrid = props => {
                     query: keyword
                 }
                 res = await search(props.category, params)
+                
             }
             setItems(res.data.results)
             setTotalPages(res.data.total_pages)
         }
-        fetchListData()
+        getList()
     },[props.category, keyword])
 
     const loadMore = async() => {
@@ -63,8 +66,11 @@ const MovieGrid = props => {
 
     return (
         <>
+            <div className="section mb-3">
+                <MovieSearch category={props.category} keyword={props.keyword}/>
+            </div>
             <div className='movie-grid'>
-            {items.map((item, i) => <MovieCard category={props.category} item={item} key={i}/>)}
+                {items.map((item, i) => <MovieCard category={props.category} item={item} key={i}/>)}
             </div>
             {
                 page < totalPages ? (
@@ -74,6 +80,50 @@ const MovieGrid = props => {
                 ) : null
             }
         </>
+    )
+    
+}
+const MovieSearch = props => {
+    console.log(props.category)
+
+    const history = useHistory();
+    const [keyword, setKeyword] = useState(props.keyword ? props.keyword : '');
+
+
+    const goToSearch = useCallback(
+        () => {
+            if (keyword.trim().length > 0) {
+                history.push(`/${category[props.category]}/search/${keyword}`);
+            }
+        },
+        [keyword, props.category, history]
+    );
+
+    useEffect(() => {
+        const enterEvent = (e) => {
+            // console.log(e.keyCode)
+            e.preventDefault();
+            if (e.keyCode === 13) {
+                goToSearch();
+            }
+        }
+        document.addEventListener('keyup', enterEvent);
+        return () => {
+            document.removeEventListener('keyup', enterEvent);
+        };
+    }, [keyword, goToSearch]);
+
+    
+    return (
+        <div className="movie-search">
+            <Input
+                type="text"
+                placeholder="Enter keyword"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+            />
+            <Button className="small" onClick={goToSearch}>Search</Button>
+        </div>
     )
 }
 

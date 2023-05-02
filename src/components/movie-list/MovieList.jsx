@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { SwiperSlide, Swiper } from 'swiper/react'
-import { apiGetMovieList, apiGetTvList, similar, movieType, category } from '../../api'
-import apiConfig from '../../api/apiConfig'
+import { apiGetMovieList, apiGetTvList, similar, category } from '../../api'
 import PropTypes from 'prop-types'
 import './movie-list.scss'
 import MovieCard from '../movie-card/MovieCard'
 const MovieList = props => {
-    console.log(props)
     const [items, setItems] = useState([])
 
     useEffect(() => {
-        const fetchListData = async() => {
+        const getList = async() => {
             let res = null
-            console.log(res)
             // const params = {}
 
             if(props.type !== 'similar') {
@@ -27,11 +24,10 @@ const MovieList = props => {
                 }
             } else {
                 res = await similar(props.category, props.id)
-                console.log(res)
             }
             setItems(res.data.results)
         }
-        fetchListData()
+        getList()
     }, [])
 
     return (

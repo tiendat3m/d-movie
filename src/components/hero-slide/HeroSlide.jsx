@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef} from 'react'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import Button, {OutlineButton} from '../button/Button'
 import Modal, {ModalContent} from '../modal/Modal'
-import SwiperCore, { Autoplay } from 'swiper'
+import { Autoplay } from 'swiper'
 import './hero-slide.scss'
 import apiConfig from '../../api/apiConfig'
 import { apiGetMovieList, apiGetVideos, movieType } from '../../api'
@@ -12,11 +12,11 @@ const HeroSlide = () => {
     const [movieItems, setMovieItems] = useState([])
     
     useEffect(() => {
-        const fetchMovieData = async() => {
+        const getMovies = async() => {
             const res = await apiGetMovieList(movieType.popular)
             setMovieItems(res.data.results.slice(1, 4))
         }
-        fetchMovieData()
+        getMovies()
     }, []);
 
     return (
@@ -41,12 +41,11 @@ const HeroSlide = () => {
 export const HeroSlideItem = props => {
     const [videos, setVideos] = useState([])
     useEffect(() => {
-        const fetchVideoData = async() => {
+        const getVideos = async() => {
             const res = await apiGetVideos(item.id)
             setVideos(res.data.results)
-            
         }   
-        fetchVideoData()
+        getVideos()
     }, []);
     let history = useHistory()
     const item = props.item

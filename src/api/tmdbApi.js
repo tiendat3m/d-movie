@@ -35,7 +35,6 @@ export const apiGetVideos = (id) => new Promise(async (resolve, reject) => {
     try {
         const response = await axiosClient({
             url: 'movie/' + id + '/videos' ,
-            params: {id: id}
         })
         resolve(response)
     }catch (error) {
@@ -66,11 +65,34 @@ export const similar = (cate, id) => new Promise(async (resolve, reject) => {
     }
 })
 
-export const search = (cate, params) => new Promise(async (resolve, reject) => {
+export const search = (cate, keyword) => new Promise(async (resolve, reject) => {
     try {
         const response = await axiosClient({
-            url: 'search/' + category[cate],
-            params
+            url: 'search/' +  category[cate],
+            params: {keyword}
+            
+        })
+        resolve(response)
+    }catch (error) {
+        reject(error)
+    }
+})
+
+export const apiDetail = (cate, id) => new Promise(async (resolve, reject) => {
+    try {
+        const response = await axiosClient({
+            url: category[cate] + '/' + id,
+        })
+        resolve(response)
+    }catch (error) {
+        reject(error)
+    }
+})
+
+export const apiCredit = (cate, id) => new Promise(async (resolve, reject) => {
+    try {
+        const response = await axiosClient({
+            url: category[cate] + '/' + id + '/credits',
         })
         resolve(response)
     }catch (error) {
