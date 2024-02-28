@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min'
+import { useHistory, useParams } from 'react-router'
 import { category, movieType, tvType } from '../../api'
 import MovieCard from '../movie-card/MovieCard'
-import { apiGetMovieList, apiGetTvList, search } from '../../api'
 import Input from '../input/Input'
 import Button from '../button/Button'
+import { apiGetMovieList, apiGetTvList, search } from '../../api'
 
 import './movie-grid.scss'
 import { OutlineButton } from '../button/Button'
@@ -13,64 +13,66 @@ const MovieGrid = props => {
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0)
 
-    const { keyword } = useParams
+    const { keyword } = useParams()
 
     useEffect(() => {
         const getList = async () => {
             let res = null
-            if(keyword === undefined) {
+            if (keyword === undefined) {
                 const params = {}
-                switch(props.category) {
-                    case category.movie :
-                        res = await apiGetMovieList(movieType.upcoming, params)
+                switch (props.category) {
+                    case category.movie:
+                        res = await apiGetMovieList(movieType.upcoming, { params })
+                        // console.log(res)
                         break;
-                    default: 
-                        res = await apiGetTvList(tvType.popular, params)
+                    default:
+                        res = await apiGetTvList(tvType.popular, { params })
                 }
-            }else {
+            } else {
                 const params = {
                     query: keyword
                 }
-                res = await search(props.category, params)
-                
+                res = await search(props.category, { params })
+
+                console.log(res)
             }
-            setItems(res.data.results)
-            setTotalPages(res.data.total_pages)
+            setItems(res?.data?.results)
+            setTotalPages(res?.data?.total_pages)
         }
         getList()
-    },[props.category, keyword])
+    }, [props.category, keyword])
 
-    const loadMore = async() => {
+    const loadMore = async () => {
         let res = null
-            if(keyword === undefined) {
-                const params = {
-                    page: page + 1
-                }
-                switch(props.category) {
-                    case category.movie :
-                        res = await apiGetMovieList(movieType.upcoming, params)
-                        break;
-                    default: 
-                        res = await apiGetTvList(tvType.popular, params)
-                }
-            }else {
-                const params = {
-                    page: page + 1,
-                    query: keyword
-                }
-                res = await search(props.category, params)
+        if (keyword === undefined) {
+            const params = {
+                page: page + 1
             }
-            setItems([...items, ...res.data.results])
-            setPage(page + 1)
+            switch (props.category) {
+                case category.movie:
+                    res = await apiGetMovieList(movieType.upcoming, { params })
+                    break;
+                default:
+                    res = await apiGetTvList(tvType.popular, { params })
+            }
+        } else {
+            const params = {
+                page: page + 1,
+                query: keyword
+            }
+            res = await search(props.category, { params })
+        }
+        setItems([...items, ...res.data.results])
+        setPage(page + 1)
     }
 
     return (
         <>
             <div className="section mb-3">
-                <MovieSearch category={props.category} keyword={props.keyword}/>
+                <MovieSearch category={props.category} keyword={props.keyword} />
             </div>
             <div className='movie-grid'>
-                {items.map((item, i) => <MovieCard category={props.category} item={item} key={i}/>)}
+                {items.map((item, i) => <MovieCard category={props.category} item={item} key={i} />)}
             </div>
             {
                 page < totalPages ? (
@@ -81,10 +83,10 @@ const MovieGrid = props => {
             }
         </>
     )
-    
+
 }
 const MovieSearch = props => {
-    console.log(props.category)
+    // console.log(props.category)
 
     const history = useHistory();
     const [keyword, setKeyword] = useState(props.keyword ? props.keyword : '');
@@ -113,7 +115,7 @@ const MovieSearch = props => {
         };
     }, [keyword, goToSearch]);
 
-    
+
     return (
         <div className="movie-search">
             <Input

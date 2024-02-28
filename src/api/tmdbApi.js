@@ -26,7 +26,7 @@ export const apiGetMovieList = (type, params) => new Promise(async (resolve, rej
             params
         })
         resolve(response)
-    }catch (error) {
+    } catch (error) {
         reject(error)
     }
 })
@@ -34,10 +34,10 @@ export const apiGetMovieList = (type, params) => new Promise(async (resolve, rej
 export const apiGetVideos = (id) => new Promise(async (resolve, reject) => {
     try {
         const response = await axiosClient({
-            url: 'movie/' + id + '/videos' ,
+            url: 'movie/' + id + '/videos',
         })
         resolve(response)
-    }catch (error) {
+    } catch (error) {
         reject(error)
     }
 })
@@ -45,11 +45,11 @@ export const apiGetVideos = (id) => new Promise(async (resolve, reject) => {
 export const apiGetTvList = (type, params) => new Promise(async (resolve, reject) => {
     try {
         const response = await axiosClient({
-            url: 'tv/' + tvType[type] ,
+            url: 'tv/' + tvType[type],
             params
         })
         resolve(response)
-    }catch (error) {
+    } catch (error) {
         reject(error)
     }
 })
@@ -60,20 +60,7 @@ export const similar = (cate, id) => new Promise(async (resolve, reject) => {
             url: cate + '/' + id + '/similar',
         })
         resolve(response)
-    }catch (error) {
-        reject(error)
-    }
-})
-
-export const search = (cate, keyword) => new Promise(async (resolve, reject) => {
-    try {
-        const response = await axiosClient({
-            url: 'search/' +  category[cate],
-            params: {keyword}
-            
-        })
-        resolve(response)
-    }catch (error) {
+    } catch (error) {
         reject(error)
     }
 })
@@ -84,7 +71,7 @@ export const apiDetail = (cate, id) => new Promise(async (resolve, reject) => {
             url: category[cate] + '/' + id,
         })
         resolve(response)
-    }catch (error) {
+    } catch (error) {
         reject(error)
     }
 })
@@ -95,7 +82,12 @@ export const apiCredit = (cate, id) => new Promise(async (resolve, reject) => {
             url: category[cate] + '/' + id + '/credits',
         })
         resolve(response)
-    }catch (error) {
+    } catch (error) {
         reject(error)
     }
 })
+
+export const search = (cate, params) => {
+    const url = 'search/' + category[cate]
+    return axiosClient.get(url, params)
+}
