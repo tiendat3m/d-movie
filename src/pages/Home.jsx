@@ -2,9 +2,10 @@ import React from 'react'
 import HeroSlide from '../components/hero-slide/HeroSlide'
 import { OutlineButton } from '../components/button/Button'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min'
-import { category, movieType, tvType } from '../api'
+import { category, movieType } from '../api'
 import MovieList from '../components/movie-list/MovieList'
 const Home = () => {
+
     return (
         <>
             <HeroSlide />
@@ -17,7 +18,7 @@ const Home = () => {
                         </Link>
                     </div>
                     <div>
-                        <MovieList category={category.movie} type={movieType.popular}/>
+                        <MovieList category={category.movie} type={movieType.popular} />
                     </div>
                 </div>
 
@@ -29,7 +30,7 @@ const Home = () => {
                         </Link>
                     </div>
                     <div>
-                        <MovieList category={category.movie} type={movieType.top_rated}/>
+                        <MovieList category={category.movie} type={movieType.top_rated} />
                     </div>
                 </div>
 
@@ -41,7 +42,7 @@ const Home = () => {
                         </Link>
                     </div>
                     <div>
-                        <MovieList category={category.tv} type={movieType.popular}/>
+                        <MovieList category={category.tv} type={movieType.popular} />
                     </div>
                 </div>
 
@@ -53,7 +54,7 @@ const Home = () => {
                         </Link>
                     </div>
                     <div>
-                        <MovieList category={category.tv} type={movieType.top_rated}/>
+                        <MovieList category={category.tv} type={movieType.top_rated} />
                     </div>
                 </div>
             </div>
